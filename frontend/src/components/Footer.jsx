@@ -27,13 +27,13 @@ const Footer = () => {
           <div className="lg:col-span-1">
             <Link to="/" className="inline-block mb-6">
               <img
-                src="/assets/asset/Logo.JPG"
+                src="/assets/asset/Logo_RB.png"
                 alt="The Cube Realty"
-                className="h-14 w-auto object-contain"
+                className="h-16 w-auto object-contain"
               />
             </Link>
             <p className="text-cube-ivory/60 font-manrope text-sm leading-relaxed mb-6">
-              Luxury farmhouse villas designed for living & earning. Experience the perfect blend of lifestyle and investment.
+              Curated luxury living experiences that blend refined design, elevated lifestyle, and high-value investment opportunities.
             </p>
             <div className="flex gap-4">
               {socialLinks.map((social) => (
@@ -78,7 +78,7 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin size={18} className="text-cube-gold mt-1 flex-shrink-0" />
                 <span className="text-cube-ivory/60 font-manrope text-sm">
-                  Near SG Highway, Ahmedabad, Gujarat, India
+                  205-206 Venus Benecia, Nr. Pakwan Junction, Nr. Khyati hospital, Above Nexa Showroom, S.G. Highway, Bodakdev, Ahmedabad-380053
                 </span>
               </li>
               <li className="flex items-center gap-3">
@@ -87,7 +87,7 @@ const Footer = () => {
                   href="tel:+919876543210"
                   className="text-cube-ivory/60 hover:text-cube-gold font-manrope text-sm transition-colors duration-300"
                 >
-                  +91 98765 43210
+                  +91 9327056262
                 </a>
               </li>
               <li className="flex items-center gap-3">
@@ -96,7 +96,7 @@ const Footer = () => {
                   href="mailto:info@cuberealty.com"
                   className="text-cube-ivory/60 hover:text-cube-gold font-manrope text-sm transition-colors duration-300"
                 >
-                  info@cuberealty.com
+                  thecuberealty99@gmail.com
                 </a>
               </li>
             </ul>

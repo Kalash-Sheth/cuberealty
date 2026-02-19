@@ -116,7 +116,7 @@ const VillaCard = ({ villa, index }) => {
 
           {/* CTA */}
           <Link
-            to="/contact"
+            to="/real-estate"
             className="inline-flex items-center gap-2 text-cube-gold font-manrope text-sm tracking-wider uppercase group/btn hover:gap-4 transition-all duration-300"
           >
             View Details

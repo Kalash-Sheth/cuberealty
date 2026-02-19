@@ -6,13 +6,13 @@ import CTASection from '../components/CTASection';
 const founders = [
   {
     name: 'Hardik Sheth',
-    role: 'Co-Founder & CEO',
+    role: 'Co-Founder & Director',
     quote: '"Our vision is to create spaces where luxury meets purpose, and investment meets lifestyle."',
     initial: 'H',
   },
   {
     name: 'Tejas Dadia',
-    role: 'Co-Founder & COO',
+    role: 'Co-Founder & Director',
     quote: '"Every villa we build is a testament to our commitment to excellence and investor success."',
     initial: 'T',
   },
@@ -25,8 +25,8 @@ const values = [
 ];
 
 const stats = [
-  { icon: Award, value: '5+', label: 'Years of Excellence' },
-  { icon: Users, value: '50+', label: 'Happy Investors' },
+  { icon: Award, value: '9+', label: 'Years of Excellence' },
+  { icon: Users, value: '150+', label: 'Happy Investors' },
   { icon: TrendingUp, value: '100%', label: 'ROI Delivered' },
 ];
 
@@ -72,7 +72,7 @@ const AboutPage = () => {
           <h1 className="font-playfair text-4xl md:text-5xl lg:text-6xl text-cube-ivory leading-tight">
             The Cube Realty
             <br />
-            <span className="text-gold-gradient">Redefining Farmhouse Living</span>
+            <span className="text-gold-gradient">Redefining Luxury Living</span>
           </h1>
         </motion.div>
       </section>
@@ -96,7 +96,7 @@ const AboutPage = () => {
               </h2>
               <div className="space-y-4 text-cube-ivory/70 font-manrope text-base leading-relaxed">
                 <p>
-                  The Cube Realty was founded with a singular vision: to create exceptional farmhouse living experiences that serve as both luxurious retreats and smart investments.
+                  The Cube Realty was founded with a singular vision: to create exceptional luxury living experiences that serve as both luxurious retreats and smart investments.
                 </p>
                 <p>
                   Our founders, Hardik Sheth and Tejas Dadia, recognized a gap in the market for properties that combine world-class amenities with sustainable returns. What began as a dream has now transformed into a premier boutique real estate brand.
@@ -121,7 +121,7 @@ const AboutPage = () => {
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 glass p-6">
-                <p className="font-playfair text-3xl text-cube-gold mb-1">2019</p>
+                <p className="font-playfair text-3xl text-cube-gold mb-1">2021</p>
                 <p className="font-manrope text-cube-ivory/60 text-sm">Founded in Ahmedabad</p>
               </div>
             </motion.div>
