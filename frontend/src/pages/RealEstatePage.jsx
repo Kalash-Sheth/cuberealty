@@ -53,7 +53,7 @@ const FloatingVillaNavigator = ({ currentIndex, setCurrentIndex }) => {
         onClick={prevVilla}
         whileHover={{ scale: 1.1, x: -4 }}
         whileTap={{ scale: 0.9 }}
-        className="pointer-events-auto absolute left-4 top-1/2 -translate-y-1/2 w-16 h-16 glass flex items-center justify-center text-cube-gold/80 hover:text-cube-gold hover:bg-cube-gold hover:text-cube-black/80 hover:backdrop-blur-none transition-all duration-300"
+        className="pointer-events-auto absolute left-4 top-1/2 -translate-y-1/2 w-16 h-16 glass flex items-center justify-center text-cube-gold/80 hover:bg-cube-gold hover:text-cube-black/90 hover:backdrop-blur-none transition-all duration-300"
       >
         <ChevronLeft size={28} />
       </motion.button>
@@ -63,7 +63,7 @@ const FloatingVillaNavigator = ({ currentIndex, setCurrentIndex }) => {
         onClick={nextVilla}
         whileHover={{ scale: 1.1, x: 4 }}
         whileTap={{ scale: 0.9 }}
-        className="pointer-events-auto absolute right-4 top-1/2 -translate-y-1/2 w-16 h-16 glass flex items-center justify-center text-cube-gold/80 hover:text-cube-gold hover:bg-cube-gold hover:text-cube-black/80 hover:backdrop-blur-none transition-all duration-300"
+        className="pointer-events-auto absolute right-4 top-1/2 -translate-y-1/2 w-16 h-16 glass flex items-center justify-center text-cube-gold/80 hover:bg-cube-gold hover:text-cube-black/90 hover:backdrop-blur-none transition-all duration-300"
       >
         <ChevronRight size={28} />
       </motion.button>

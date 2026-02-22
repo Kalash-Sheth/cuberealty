@@ -8,11 +8,15 @@ import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import RealEstatePage from "./pages/RealEstatePage";
 import ContactPage from "./pages/ContactPage";
+import InvestmentPage from "./pages/InvestmentPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <div className="App bg-cube-black min-h-screen">
       <BrowserRouter>
+        <ScrollToTop />
+
         <Navbar />
         <AnimatePresence mode="wait">
           <Routes>
@@ -20,6 +24,7 @@ function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/real-estate" element={<RealEstatePage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/investment" element={<InvestmentPage />} />
           </Routes>
         </AnimatePresence>
         <Footer />

@@ -34,7 +34,7 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Real Estate', path: '/real-estate' },
-    { name: 'Investment', path: '/#investment' },
+    { name: 'Investment', path: '/investment' },
     { name: 'About Us', path: '/about' },
   ];
 
@@ -43,7 +43,7 @@ const Navbar = () => {
   =============================== */
   const handleInvestmentClick = () => {
     if (location.pathname !== '/') {
-      navigate('/#investment');
+      navigate('/investment');
     } else {
       const section = document.querySelector('#investment');
       section?.scrollIntoView({ behavior: 'smooth' });
