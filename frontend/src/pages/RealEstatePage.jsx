@@ -1,8 +1,6 @@
-import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { motion, useInView, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
 import {
-  ChevronLeft,
-  ChevronRight,
   Crown,
   Castle,
   Sparkles,
@@ -29,46 +27,201 @@ import {
   Trees,
   Map,
   Bird,
-  Film, 
-  Sofa, 
+  Film,
+  Sofa,
   Flower2,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const FloatingVillaNavigator = ({ currentIndex, setCurrentIndex }) => {
+// ================================
+// STICKY VILLA TAB BAR
+// ================================
+const StickyVillaTabBar = ({ currentIndex, setCurrentIndex }) => {
 
-  const prevVilla = () => {
+  const [isSticky, setIsSticky] = useState(false);
+
+  const tabBarRef = useRef(null);
+  const sentinelRef = useRef(null);
+
+  // ⭐ NEW refs
+  const scrollRef = useRef(null);
+  const tabRefs = useRef([]);
+
+  // Sticky logic
+  useEffect(() => {
+
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsSticky(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+
+    observer.observe(sentinel);
+
+    return () => observer.disconnect();
+
+  }, []);
+
+  // ⭐ AUTO HORIZONTAL SCROLL ONLY (NO PAGE MOVE)
+  useEffect(() => {
+
+    const container = scrollRef.current;
+    const activeTab = tabRefs.current[currentIndex];
+
+    if (!container || !activeTab) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const tabRect = activeTab.getBoundingClientRect();
+
+    const scrollOffset =
+      tabRect.left -
+      containerRect.left -
+      containerRect.width / 2 +
+      tabRect.width / 2;
+
+    container.scrollBy({
+      left: scrollOffset,
+      behavior: "smooth",
+    });
+
+  }, [currentIndex]);
+
+  const tabs = villas.map((v, i) => ({
+    index: i,
+    name: v.name,
+    icon: v.icon,
+  }));
+
+  const prevVilla = () =>
     setCurrentIndex(prev => (prev - 1 + villas.length) % villas.length);
-  };
 
-  const nextVilla = () => {
+  const nextVilla = () =>
     setCurrentIndex(prev => (prev + 1) % villas.length);
-  };
 
   return (
-    <div className="fixed inset-y-0 left-0 right-0 pointer-events-none z-40">
+    <>
+      {/* Sentinel */}
+      <div ref={sentinelRef} className="h-0 w-full" />
 
-      {/* LEFT BUTTON */}
-      <motion.button
-        onClick={prevVilla}
-        whileHover={{ scale: 1.1, x: -4 }}
-        whileTap={{ scale: 0.9 }}
-        className="pointer-events-auto absolute left-4 top-1/2 -translate-y-1/2 w-16 h-16 glass flex items-center justify-center text-cube-gold/80 hover:bg-cube-gold hover:text-cube-black/90 hover:backdrop-blur-none transition-all duration-300"
+      <div
+        ref={tabBarRef}
+        className={`w-full z-50 transition-all duration-300 ${
+          isSticky
+            ? "fixed top-0 left-0 right-0 shadow-[0_4px_30px_rgba(0,0,0,0.6)]"
+            : "relative"
+        }`}
+        style={{
+          background: isSticky
+            ? "rgba(10,10,10,0.97)"
+            : "rgba(10,10,10,0.95)",
+          backdropFilter: "blur(20px)",
+        }}
       >
-        <ChevronLeft size={28} />
-      </motion.button>
+        <div className="max-w-[1400px] mx-auto px-4 md:px-8">
 
-      {/* RIGHT BUTTON */}
-      <motion.button
-        onClick={nextVilla}
-        whileHover={{ scale: 1.1, x: 4 }}
-        whileTap={{ scale: 0.9 }}
-        className="pointer-events-auto absolute right-4 top-1/2 -translate-y-1/2 w-16 h-16 glass flex items-center justify-center text-cube-gold/80 hover:bg-cube-gold hover:text-cube-black/90 hover:backdrop-blur-none transition-all duration-300"
-      >
-        <ChevronRight size={28} />
-      </motion.button>
+          <div className="flex items-center gap-2 py-2">
 
-    </div>
+            {/* LEFT ARROW */}
+            <button
+              onClick={prevVilla}
+              className="flex-shrink-0 w-9 h-9 md:w-10 md:h-10 flex items-center justify-center border border-cube-gold/30 text-cube-gold/70 hover:text-cube-gold hover:border-cube-gold hover:bg-cube-gold/10 transition-all duration-300"
+            >
+              <ChevronLeft size={18} />
+            </button>
+
+            {/* SCROLL AREA */}
+            <div className="flex-1 overflow-hidden">
+
+              <div
+                ref={scrollRef}
+                className="flex items-center gap-2 overflow-x-auto md:overflow-visible whitespace-nowrap scroll-smooth scrollbar-none  md:justify-center md:w-full"
+              >
+                {tabs.map((tab) => {
+
+                  const Icon = tab.icon;
+                  const isActive = currentIndex === tab.index;
+
+                  return (
+                    <button
+                      key={tab.index}
+                      ref={(el) => (tabRefs.current[tab.index] = el)}
+                      onClick={() => setCurrentIndex(tab.index)}
+                      className={`
+                        relative flex-none
+                        flex flex-col md:flex-row items-center justify-center
+                        gap-1 md:gap-2.5 py-3.5 md:py-4 px-4 md:px-6
+                        whitespace-nowrap border-b-2 group transition-all duration-300
+                        ${
+                          isActive
+                            ? "text-cube-gold border-cube-gold"
+                            : "text-cube-ivory/50 border-transparent hover:text-cube-ivory/80 hover:border-cube-gold/30"
+                        }
+                      `}
+                    >
+
+                      {/* Active glow */}
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeTabBg"
+                          className="absolute inset-0"
+                          style={{
+                            background:
+                              "linear-gradient(to bottom, rgba(212,175,55,0.08), transparent)",
+                          }}
+                        />
+                      )}
+
+                      {/* ICON */}
+                      <span className={`relative z-10 transition-transform duration-300 ${
+                        isActive ? "scale-110" : "group-hover:scale-105"
+                      }`}>
+                        <Icon
+                          size={18}
+                          className="md:w-[26px] md:h-[26px]"
+                          strokeWidth={isActive ? 2.5 : 2}
+                        />
+                      </span>
+
+                      {/* LABEL */}
+                      <span className="relative z-10 font-cinzel text-sm md:text-[15px] tracking-[0.12em] uppercase font-bold text-center">
+                        <span className="md:hidden">
+                          {tab.index === 0
+                            ? "Crown Jewel"
+                            : tab.index === 1
+                            ? "Tuscan"
+                            : "Disney"}
+                        </span>
+                        <span className="hidden md:inline">{tab.name}</span>
+                      </span>
+
+                    </button>
+                  );
+                })}
+              </div>
+
+            </div>
+
+            {/* RIGHT ARROW */}
+            <button
+              onClick={nextVilla}
+              className="flex-shrink-0 w-9 h-9 md:w-10 md:h-10 flex items-center justify-center border border-cube-gold/30 text-cube-gold/70 hover:text-cube-gold hover:border-cube-gold hover:bg-cube-gold/10 transition-all duration-300"
+            >
+              <ChevronRight size={18} />
+            </button>
+
+          </div>
+        </div>
+      </div>
+
+      {/* Spacer */}
+      {isSticky && (
+        <div style={{ height: tabBarRef.current?.offsetHeight || 56 }} />
+      )}
+    </>
   );
 };
 
@@ -79,7 +232,6 @@ const villas = [
   /* ================================
      CROWN JEWEL VILLA
   ================================ */
-
   {
     id: 1,
     name: 'Crown Jewel Villa',
@@ -152,7 +304,6 @@ const villas = [
   /* ================================
      TUSCAN VILLA
   ================================ */
-
   {
     id: 2,
     name: 'Tuscan Villa',
@@ -225,7 +376,6 @@ const villas = [
   /* ================================
      DISNEY THEMED VILLA
   ================================ */
-
   {
     id: 3,
     name: 'Disney Themed Villa',
@@ -304,14 +454,6 @@ const VillaSelector = ({ currentIndex, setCurrentIndex }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
 
-  const prevVilla = () => {
-    setCurrentIndex((prev) => (prev - 1 + villas.length) % villas.length);
-  };
-
-  const nextVilla = () => {
-    setCurrentIndex((prev) => (prev + 1) % villas.length);
-  };
-
   const currentVilla = villas[currentIndex];
   const VillaIcon = currentVilla.icon;
 
@@ -331,20 +473,8 @@ const VillaSelector = ({ currentIndex, setCurrentIndex }) => {
           </p>
         </motion.div>
 
-        {/* Villa Carousel */}
-        <div className="flex items-center justify-center gap-4 md:gap-8">
-          {/* Left Arrow */}
-          {/* <motion.button
-            onClick={prevVilla}
-            data-testid="villa-prev"
-            whileHover={{ scale: 1.1, x: -5 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-14 h-14 md:w-16 md:h-16 glass flex items-center justify-center bg-cube-gold text-cube-gold hover:text-cube-gold hover:border-cube-gold/50 transition-all duration-300 flex-shrink-0"
-          >
-            <ChevronLeft size={28} />
-          </motion.button> */}
-
-          {/* Villa Name Display */}
+        {/* Villa Name Display */}
+        <div className="flex items-center justify-center">
           <div className="flex-1 max-w-2xl">
             <AnimatePresence mode="wait">
               <motion.div
@@ -390,17 +520,6 @@ const VillaSelector = ({ currentIndex, setCurrentIndex }) => {
               </motion.div>
             </AnimatePresence>
           </div>
-
-          {/* Right Arrow */}
-          {/* <motion.button
-            onClick={nextVilla}
-            data-testid="villa-next"
-            whileHover={{ scale: 1.1, x: 5 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-14 h-14 md:w-16 md:h-16 glass flex items-center justify-center text-cube-ivory/70 hover:text-cube-gold hover:border-cube-gold/50 transition-all duration-300 flex-shrink-0"
-          >
-            <ChevronRight size={28} />
-          </motion.button> */}
         </div>
 
         {/* Villa Indicators */}
@@ -439,7 +558,6 @@ const Lightbox = ({ image, onClose, villaName }) => {
       onClick={onClose}
       data-testid="lightbox"
     >
-      {/* Close Button */}
       <motion.button
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -451,7 +569,6 @@ const Lightbox = ({ image, onClose, villaName }) => {
         <X size={24} />
       </motion.button>
 
-      {/* Image */}
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -465,7 +582,6 @@ const Lightbox = ({ image, onClose, villaName }) => {
           alt={villaName}
           className="max-w-full max-h-[85vh] object-contain"
         />
-        {/* Caption */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -479,7 +595,7 @@ const Lightbox = ({ image, onClose, villaName }) => {
   );
 };
 
-// Image Gallery Component with Heatmap Effect
+// Image Gallery Component
 const ImageGallery = ({ images, villaName }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [lightboxImage, setLightboxImage] = useState(null);
@@ -514,7 +630,6 @@ const ImageGallery = ({ images, villaName }) => {
             </p>
           </motion.div>
 
-          {/* Heatmap Grid */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
             {images.map((image, index) => (
               <motion.div
@@ -522,8 +637,7 @@ const ImageGallery = ({ images, villaName }) => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className={`relative overflow-hidden cursor-pointer group ${index === 0 ? 'md:col-span-2 md:row-span-2' : ''
-                  }`}
+                className={`relative overflow-hidden cursor-pointer group ${index === 0 ? 'md:col-span-2 md:row-span-2' : ''}`}
                 style={{ aspectRatio: index === 0 ? '16/10' : '4/3' }}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
@@ -541,22 +655,16 @@ const ImageGallery = ({ images, villaName }) => {
                   transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
                 />
 
-                {/* Overlay */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-t from-cube-black/80 via-cube-black/20 to-transparent"
-                  animate={{
-                    opacity: hoveredIndex === index ? 1 : 0.4,
-                  }}
+                  animate={{ opacity: hoveredIndex === index ? 1 : 0.4 }}
                   transition={{ duration: 0.3 }}
                 />
 
-                {/* Hover Content */}
                 <motion.div
                   className="absolute inset-0 flex flex-col items-center justify-center"
                   initial={{ opacity: 0 }}
-                  animate={{
-                    opacity: hoveredIndex === index ? 1 : 0,
-                  }}
+                  animate={{ opacity: hoveredIndex === index ? 1 : 0 }}
                   transition={{ duration: 0.3 }}
                 >
                   <motion.div
@@ -573,21 +681,14 @@ const ImageGallery = ({ images, villaName }) => {
                   <p className="font-manrope text-cube-gold text-sm mt-2">Click to expand</p>
                 </motion.div>
 
-                {/* Corner Accents */}
                 <motion.div
                   className="absolute top-3 right-3 w-8 h-8 border-t-2 border-r-2 border-cube-gold"
-                  animate={{
-                    opacity: hoveredIndex === index ? 1 : 0,
-                    scale: hoveredIndex === index ? 1 : 0.5,
-                  }}
+                  animate={{ opacity: hoveredIndex === index ? 1 : 0, scale: hoveredIndex === index ? 1 : 0.5 }}
                   transition={{ duration: 0.3 }}
                 />
                 <motion.div
                   className="absolute bottom-3 left-3 w-8 h-8 border-b-2 border-l-2 border-cube-gold"
-                  animate={{
-                    opacity: hoveredIndex === index ? 1 : 0,
-                    scale: hoveredIndex === index ? 1 : 0.5,
-                  }}
+                  animate={{ opacity: hoveredIndex === index ? 1 : 0, scale: hoveredIndex === index ? 1 : 0.5 }}
                   transition={{ duration: 0.3 }}
                 />
               </motion.div>
@@ -596,14 +697,9 @@ const ImageGallery = ({ images, villaName }) => {
         </div>
       </section>
 
-      {/* Lightbox */}
       <AnimatePresence>
         {lightboxImage && (
-          <Lightbox
-            image={lightboxImage}
-            villaName={villaName}
-            onClose={() => setLightboxImage(null)}
-          />
+          <Lightbox image={lightboxImage} villaName={villaName} onClose={() => setLightboxImage(null)} />
         )}
       </AnimatePresence>
     </>
@@ -624,7 +720,6 @@ const SpecificationsSection = ({ villa }) => {
     { icon: MapPin, label: 'Prime Location', value: villa.specs.location },
   ];
 
-
   return (
     <section ref={ref} className="py-20 md:py-28 bg-cube-charcoal relative overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
@@ -634,12 +729,8 @@ const SpecificationsSection = ({ villa }) => {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <p className="font-cinzel text-cube-gold text-xs tracking-[0.2em] uppercase mb-3">
-            Technical Details
-          </p>
-          <h2 className="font-playfair text-3xl md:text-4xl lg:text-5xl text-cube-ivory">
-            Property Specifications
-          </h2>
+          <p className="font-cinzel text-cube-gold text-xs tracking-[0.2em] uppercase mb-3">Technical Details</p>
+          <h2 className="font-playfair text-3xl md:text-4xl lg:text-5xl text-cube-ivory">Property Specifications</h2>
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
@@ -664,7 +755,6 @@ const SpecificationsSection = ({ villa }) => {
           ))}
         </div>
 
-        {/* Price Banner */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -705,15 +795,6 @@ const InvestmentSection = ({ villa }) => {
     { icon: TrendingUp, label: 'Expected Appreciation', value: villa.investment.appreciation },
   ];
 
-  const benefits = [
-    'Hassle-free rental management',
-    'Guaranteed monthly income',
-    'Property appreciation over time',
-    'Personal vacation destination',
-    'Living in Luxury Arch',
-    'Premium resale value',
-  ];
-
   return (
     <section ref={ref} className="py-20 md:py-28 bg-cube-black relative">
       <div className="section-divider absolute top-0 left-0 right-0" />
@@ -725,16 +806,11 @@ const InvestmentSection = ({ villa }) => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <p className="font-cinzel text-cube-gold text-xs tracking-[0.2em] uppercase mb-3">
-            Smart Investment
-          </p>
-          <h2 className="font-playfair text-3xl md:text-4xl lg:text-5xl text-cube-ivory">
-            Investment Details
-          </h2>
+          <p className="font-cinzel text-cube-gold text-xs tracking-[0.2em] uppercase mb-3">Smart Investment</p>
+          <h2 className="font-playfair text-3xl md:text-4xl lg:text-5xl text-cube-ivory">Investment Details</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-          {/* Investment Metrics */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -758,17 +834,14 @@ const InvestmentSection = ({ villa }) => {
             </div>
           </motion.div>
 
-          {/* Benefits */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h3 className="font-playfair text-2xl text-cube-ivory mb-6">
-              Investor Benefits
-            </h3>
+            <h3 className="font-playfair text-2xl text-cube-ivory mb-6">Investor Benefits</h3>
             <div className="space-y-4">
-              {benefits.map((benefit, index) => (
+              {villa.benefits.map((benefit, index) => (
                 <motion.div
                   key={benefit}
                   initial={{ opacity: 0, x: 20 }}
@@ -788,38 +861,12 @@ const InvestmentSection = ({ villa }) => {
                 </motion.div>
               ))}
             </div>
-
-            {/* <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="mt-8 flex flex-col sm:flex-row gap-4"
-            >
-              <Link
-                to="/contact"
-                data-testid="invest-schedule-btn"
-                className="btn-luxury bg-cube-gold text-cube-black px-8 py-4 font-manrope text-sm tracking-wider uppercase font-semibold hover:bg-white transition-colors duration-500 text-center"
-              >
-                Schedule Visit
-              </Link>
-              <a
-                href="https://wa.me/919876543210?text=Hello!%20I%20am%20interested%20in%20investing%20in%20The%20Cube%20Realty%20villas."
-                target="_blank"
-                rel="noopener noreferrer"
-                data-testid="invest-whatsapp-btn"
-                className="btn-luxury bg-[#25D366] text-white px-8 py-4 font-manrope text-sm tracking-wider uppercase font-semibold hover:bg-[#128C7E] transition-colors duration-500 flex items-center justify-center gap-2"
-              >
-                <Phone size={18} />
-                WhatsApp
-              </a>
-            </motion.div> */}
           </motion.div>
         </div>
       </div>
     </section>
   );
 };
-
 
 // Offerings & Amenities Section
 const OfferingsSection = ({ villa }) => {
@@ -835,18 +882,13 @@ const OfferingsSection = ({ villa }) => {
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-          {/* Offerings */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
-            <p className="font-cinzel text-cube-gold text-xs tracking-[0.2em] uppercase mb-3">
-              Exclusive Features
-            </p>
-            <h2 className="font-playfair text-3xl md:text-4xl text-cube-ivory mb-8">
-              Villa Offerings
-            </h2>
+            <p className="font-cinzel text-cube-gold text-xs tracking-[0.2em] uppercase mb-3">Exclusive Features</p>
+            <h2 className="font-playfair text-3xl md:text-4xl text-cube-ivory mb-8">Villa Offerings</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {villa.offerings.map((offering, index) => {
@@ -870,18 +912,13 @@ const OfferingsSection = ({ villa }) => {
             </div>
           </motion.div>
 
-          {/* Amenities */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <p className="font-cinzel text-cube-gold text-xs tracking-[0.2em] uppercase mb-3">
-              Community Features
-            </p>
-            <h2 className="font-playfair text-3xl md:text-4xl text-cube-ivory mb-8">
-              Amenities
-            </h2>
+            <p className="font-cinzel text-cube-gold text-xs tracking-[0.2em] uppercase mb-3">Community Features</p>
+            <h2 className="font-playfair text-3xl md:text-4xl text-cube-ivory mb-8">Amenities</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {villa.amenities.map((amenity, index) => {
@@ -911,7 +948,6 @@ const OfferingsSection = ({ villa }) => {
 };
 
 
-
 // Main Page Component
 const RealEstatePage = () => {
   const [currentVillaIndex, setCurrentVillaIndex] = useState(0);
@@ -927,12 +963,6 @@ const RealEstatePage = () => {
       transition={{ duration: 0.5 }}
       data-testid="real-estate-page"
     >
-
-      <FloatingVillaNavigator
-        currentIndex={currentVillaIndex}
-        setCurrentIndex={setCurrentVillaIndex}
-      />
-
       {/* Hero Section */}
       <section
         ref={heroRef}
@@ -965,46 +995,46 @@ const RealEstatePage = () => {
         </motion.div>
       </section>
 
+      {/* ✦ STICKY TAB BAR — placed immediately after hero */}
+      <StickyVillaTabBar
+        currentIndex={currentVillaIndex}
+        setCurrentIndex={setCurrentVillaIndex}
+        heroRef={heroRef}
+      />
+
       {/* Villa Selector */}
       <VillaSelector
         currentIndex={currentVillaIndex}
         setCurrentIndex={setCurrentVillaIndex}
       />
 
-      {/* Gallery Section - Linked to Selected Villa */}
+      {/* Gallery Section */}
       <ImageGallery
         key={`gallery-${currentVillaIndex}`}
         images={currentVilla.images}
         villaName={currentVilla.name}
       />
 
-      {/* Property Specifications - Linked to Selected Villa */}
+      {/* Property Specifications */}
       <SpecificationsSection
         key={`specs-${currentVillaIndex}`}
         villa={currentVilla}
       />
 
-
-      {/* Offerings & Amenities - Linked to Selected Villa */}
+      {/* Offerings & Amenities */}
       <OfferingsSection
         key={`offerings-${currentVillaIndex}`}
         villa={currentVilla}
       />
 
-      {/* Investment Details - Linked to Selected Villa */}
+      {/* Investment Details */}
       <InvestmentSection
         key={`investment-${currentVillaIndex}`}
         villa={currentVilla}
       />
-
 
     </motion.main>
   );
 };
 
 export default RealEstatePage;
-
-
-
-
-

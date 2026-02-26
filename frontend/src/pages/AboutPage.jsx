@@ -8,7 +8,7 @@ const founders = [
     name: 'Hardik Sheth',
     role: 'Co-Founder & Director',
     quote: '"Our vision is to create spaces where luxury meets purpose, and investment meets lifestyle."',
-    initial: 'H',
+    image: '/assets/asset/PRO_Photo_1.png',
   },
   {
     name: 'Tejas Dadia',
@@ -209,14 +209,24 @@ const AboutPage = () => {
                 className="glass p-8 md:p-10 text-center group hover:border-cube-gold/30 transition-all duration-300"
                 data-testid={`founder-${index}`}
               >
-                {/* Avatar Placeholder */}
+
+                {/* Avatar Placeholder
                 <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-cube-gold/30 to-cube-bronze/30 flex items-center justify-center">
                   <span className="font-playfair text-4xl text-cube-gold">{founder.initial}</span>
+                </div> */}
+
+                {/* Founder Image */}
+                <div className="w-52 mx-auto mb-6 border border-cube-gold/30">
+                  <img
+                    src={founder.image}
+                    alt={founder.name}
+                    className="w-full h-auto"
+                  />
                 </div>
-                
+
                 <h3 className="font-playfair text-2xl text-cube-ivory mb-1">{founder.name}</h3>
                 <p className="font-cinzel text-cube-gold text-xs tracking-[0.15em] uppercase mb-6">{founder.role}</p>
-                
+
                 <p className="font-playfair text-cube-ivory/80 italic text-lg leading-relaxed">
                   {founder.quote}
                 </p>
