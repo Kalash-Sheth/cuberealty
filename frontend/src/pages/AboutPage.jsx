@@ -8,7 +8,7 @@ const founders = [
     name: 'Hardik Sheth',
     role: 'Co-Founder & Director',
     quote: '"Our vision is to create spaces where luxury meets purpose, and investment meets lifestyle."',
-    image: '/assets/asset/PRO_Photo_1.png',
+    image: '/assets/asset/Pro_Photo_1.png',
   },
   {
     name: 'Tejas Dadia',
@@ -209,7 +209,7 @@ const AboutPage = () => {
                 className="glass p-8 md:p-10 text-center group hover:border-cube-gold/30 transition-all duration-300"
                 data-testid={`founder-${index}`}
               >
-
+                
                 {/* Avatar Placeholder
                 <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-cube-gold/30 to-cube-bronze/30 flex items-center justify-center">
                   <span className="font-playfair text-4xl text-cube-gold">{founder.initial}</span>
