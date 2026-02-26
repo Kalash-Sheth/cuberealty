@@ -66,7 +66,7 @@ const Hero = () => {
 
         {/* Video Background */}
         <div className="absolute inset-0 z-0">
-          <video autoPlay loop muted playsInline className="video-bg">
+          <video autoPlay loop muted playsInline preload="auto" className="video-bg">
             <source src="/assets/asset/Cube_HB.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 hero-overlay" />

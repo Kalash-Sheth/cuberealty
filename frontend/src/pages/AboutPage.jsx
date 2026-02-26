@@ -14,7 +14,7 @@ const founders = [
     name: 'Tejas Dadia',
     role: 'Co-Founder & Director',
     quote: '"Every villa we build is a testament to our commitment to excellence and investor success."',
-    initial: 'T',
+    image: '/assets/asset/Pro_Photo_2.png',
   },
 ];
 
@@ -210,12 +210,6 @@ const AboutPage = () => {
                 data-testid={`founder-${index}`}
               >
                 
-                {/* Avatar Placeholder
-                <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-cube-gold/30 to-cube-bronze/30 flex items-center justify-center">
-                  <span className="font-playfair text-4xl text-cube-gold">{founder.initial}</span>
-                </div> */}
-
-                {/* Founder Image */}
                 <div className="w-52 mx-auto mb-6 border border-cube-gold/30">
                   <img
                     src={founder.image}
