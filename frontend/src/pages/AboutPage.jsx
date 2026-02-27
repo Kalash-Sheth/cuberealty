@@ -2,6 +2,7 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Target, Heart, Sparkles, Award, Users, TrendingUp } from 'lucide-react';
 import CTASection from '../components/CTASection';
+import { ExternalLink } from 'lucide-react';
 
 const founders = [
   {
@@ -9,12 +10,14 @@ const founders = [
     role: 'Co-Founder & Director',
     quote: '"Our vision is to create spaces where luxury meets purpose, and investment meets lifestyle."',
     image: '/assets/asset/Pro_Photo_1.png',
+    profileLink: 'https://dizitalbiz.in/hardik-sheth',
   },
   {
     name: 'Tejas Dadia',
-    role: 'Co-Founder & Director',
+    role: 'Founder & Director',
     quote: '"Every villa we build is a testament to our commitment to excellence and investor success."',
     image: '/assets/asset/Pro_Photo_2.png',
+    profileLink: 'https://your-link-here.com',
   },
 ];
 
@@ -209,7 +212,7 @@ const AboutPage = () => {
                 className="glass p-8 md:p-10 text-center group hover:border-cube-gold/30 transition-all duration-300"
                 data-testid={`founder-${index}`}
               >
-                
+
                 <div className="w-52 mx-auto mb-6 border border-cube-gold/30">
                   <img
                     src={founder.image}
@@ -220,7 +223,15 @@ const AboutPage = () => {
 
                 <h3 className="font-playfair text-2xl text-cube-ivory mb-1">{founder.name}</h3>
                 <p className="font-cinzel text-cube-gold text-xs tracking-[0.15em] uppercase mb-6">{founder.role}</p>
-
+                <a
+                  href={founder.profileLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center whitespace-nowrap gap-2 mb-6 px-5 py-2 border border-cube-gold text-cube-gold text-xs tracking-wider uppercase font-cinzel hover:bg-cube-gold hover:text-cube-black transition-all duration-300"
+                >
+                  <span>Business Profile</span>
+                  <ExternalLink size={14} className="shrink-0" />
+                </a>
                 <p className="font-playfair text-cube-ivory/80 italic text-lg leading-relaxed">
                   {founder.quote}
                 </p>
