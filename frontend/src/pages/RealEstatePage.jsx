@@ -1,26 +1,21 @@
-import { motion, useInView, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import {
   Crown,
   Castle,
   Sparkles,
   Bed,
-  Bath,
   Maximize,
   TreePine,
-  Car,
   Waves,
-  Wifi,
   Utensils,
   Shield,
   TrendingUp,
   Calendar,
   Gift,
   CheckCircle2,
-  Home,
   Building2,
   MapPin,
-  Phone,
   X,
   ShieldCheck,
   CalendarDays,
@@ -109,7 +104,7 @@ const StickyVillaTabBar = ({ currentIndex, setCurrentIndex, isMobileMenuOpen }) 
 
       <div
         ref={tabBarRef}
-        // AFTER
+
         className={`w-full z-50 transition-all duration-300 ${isMobileMenuOpen ? "hidden" : ""
           } ${isSticky
             ? "fixed top-0 left-0 right-0 shadow-[0_4px_30px_rgba(0,0,0,0.6)]"
