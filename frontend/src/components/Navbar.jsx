@@ -3,9 +3,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
-const Navbar = () => {
+const Navbar = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();

@@ -38,7 +38,7 @@ import { Link } from 'react-router-dom';
 // ================================
 // STICKY VILLA TAB BAR
 // ================================
-const StickyVillaTabBar = ({ currentIndex, setCurrentIndex }) => {
+const StickyVillaTabBar = ({ currentIndex, setCurrentIndex, isMobileMenuOpen }) => {
 
   const [isSticky, setIsSticky] = useState(false);
 
@@ -109,11 +109,12 @@ const StickyVillaTabBar = ({ currentIndex, setCurrentIndex }) => {
 
       <div
         ref={tabBarRef}
-        className={`w-full z-50 transition-all duration-300 ${
-          isSticky
+        // AFTER
+        className={`w-full z-50 transition-all duration-300 ${isMobileMenuOpen ? "hidden" : ""
+          } ${isSticky
             ? "fixed top-0 left-0 right-0 shadow-[0_4px_30px_rgba(0,0,0,0.6)]"
             : "relative"
-        }`}
+          }`}
         style={{
           background: isSticky
             ? "rgba(10,10,10,0.97)"
@@ -121,6 +122,7 @@ const StickyVillaTabBar = ({ currentIndex, setCurrentIndex }) => {
           backdropFilter: "blur(20px)",
         }}
       >
+
         <div className="max-w-[1400px] mx-auto px-4 md:px-8">
 
           <div className="flex items-center gap-2 py-2">
@@ -155,10 +157,9 @@ const StickyVillaTabBar = ({ currentIndex, setCurrentIndex }) => {
                         flex flex-col md:flex-row items-center justify-center
                         gap-1 md:gap-2.5 py-3.5 md:py-4 px-4 md:px-6
                         whitespace-nowrap border-b-2 group transition-all duration-300
-                        ${
-                          isActive
-                            ? "text-cube-gold border-cube-gold"
-                            : "text-cube-ivory/50 border-transparent hover:text-cube-ivory/80 hover:border-cube-gold/30"
+                        ${isActive
+                          ? "text-cube-gold border-cube-gold"
+                          : "text-cube-ivory/50 border-transparent hover:text-cube-ivory/80 hover:border-cube-gold/30"
                         }
                       `}
                     >
@@ -176,9 +177,8 @@ const StickyVillaTabBar = ({ currentIndex, setCurrentIndex }) => {
                       )}
 
                       {/* ICON */}
-                      <span className={`relative z-10 transition-transform duration-300 ${
-                        isActive ? "scale-110" : "group-hover:scale-105"
-                      }`}>
+                      <span className={`relative z-10 transition-transform duration-300 ${isActive ? "scale-110" : "group-hover:scale-105"
+                        }`}>
                         <Icon
                           size={18}
                           className="md:w-[26px] md:h-[26px]"
@@ -192,8 +192,8 @@ const StickyVillaTabBar = ({ currentIndex, setCurrentIndex }) => {
                           {tab.index === 0
                             ? "Crown Jewel"
                             : tab.index === 1
-                            ? "Tuscan"
-                            : "Disney"}
+                              ? "Tuscan"
+                              : "Disney"}
                         </span>
                         <span className="hidden md:inline">{tab.name}</span>
                       </span>
@@ -949,7 +949,7 @@ const OfferingsSection = ({ villa }) => {
 
 
 // Main Page Component
-const RealEstatePage = () => {
+const RealEstatePage = ({ isMobileMenuOpen = false }) => {
   const [currentVillaIndex, setCurrentVillaIndex] = useState(0);
   const heroRef = useRef(null);
   const isHeroInView = useInView(heroRef, { once: true });
@@ -1000,6 +1000,7 @@ const RealEstatePage = () => {
         currentIndex={currentVillaIndex}
         setCurrentIndex={setCurrentVillaIndex}
         heroRef={heroRef}
+        isMobileMenuOpen={isMobileMenuOpen}
       />
 
       {/* Villa Selector */}
