@@ -25,7 +25,7 @@ const Navbar = ({ isMobileMenuOpen, setIsMobileMenuOpen }) => {
   =============================== */
   useEffect(() => {
     setIsMobileMenuOpen(false);
-  }, [location]);
+  }, [location, setIsMobileMenuOpen]);
 
   /* ===============================
      NAV LINKS
