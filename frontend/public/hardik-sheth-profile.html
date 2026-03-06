@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hardik Sheth — Multi-Industry Entrepreneur</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+--gold:#C9A84C;
+--dark:#0A0A0A;
+--dark2:#121212;
+--text:#F0EAD6;
+--muted:#8A7A5A;
+--border:rgba(201,168,76,.25);
+}
+
+body{
+background:var(--dark);
+font-family:Montserrat;
+color:var(--text);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:40px 20px;
+}
+
+.card{
+width:100%;
+max-width:1300px;
+border:1px solid var(--border);
+background:linear-gradient(145deg,#151515,#0f0f0f);
+padding:60px;
+}
+
+/* MAIN GRID */
+
+.main-grid{
+display:grid;
+grid-template-columns:520px 1fr;
+gap:60px;
+}
+
+/* LEFT SIDE */
+
+.left{
+display:flex;
+flex-direction:column;
+gap:30px;
+}
+
+.avatar{
+width:280px;
+height:100%;
+overflow:hidden;
+border:1px solid var(--border);
+margin-left: 10%;
+}
+
+.avatar img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.name{
+font-family:"Cormorant Garamond";
+font-size:48px;
+font-weight:300;
+margin-left: 10%;
+}
+
+.name em{
+color:var(--gold);
+font-style:italic;
+}
+
+.title{
+margin-top:6px;
+font-size:11px;
+letter-spacing:4px;
+color:var(--muted);
+text-transform:uppercase;
+margin-left: 10%;
+}
+
+.profile{
+margin-top:20px;
+font-family:"Cormorant Garamond";
+font-size:18px;
+line-height:1.8;
+/* font-style:italic; */
+color:rgba(240,234,214,.85);
+}
+
+/* RIGHT SIDE */
+
+.section{
+margin-bottom:40px;
+}
+
+.section-title{
+font-size:10px;
+letter-spacing:4px;
+color:var(--gold);
+text-transform:uppercase;
+margin-bottom:18px;
+border-bottom:1px solid var(--border);
+padding-bottom:8px;
+}
+
+.portfolio li{
+list-style:none;
+padding:10px 12px;
+border:1px solid rgba(201,168,76,.12);
+margin-bottom:8px;
+font-size:13px;
+background:rgba(201,168,76,.03);
+}
+
+.association{
+border-left:2px solid var(--gold);
+padding:10px 14px;
+margin-bottom:10px;
+background:rgba(201,168,76,.03);
+}
+
+.association b{
+display:block;
+font-size:13px;
+}
+
+.association span{
+font-size:10px;
+letter-spacing:2px;
+text-transform:uppercase;
+color:var(--gold);
+}
+
+/* CONTACT */
+
+.contact{
+margin-top:60px;
+border-top:1px solid var(--border);
+padding-top:40px;
+}
+
+.contact-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+.contact-box{
+border:1px solid var(--border);
+padding:20px;
+background:var(--dark2);
+}
+
+.contact-label{
+font-size:9px;
+letter-spacing:3px;
+color:var(--gold);
+text-transform:uppercase;
+margin-bottom:6px;
+}
+
+.contact-value{
+font-size:12px;
+line-height:1.6;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.card{
+padding:40px 24px;
+}
+
+.main-grid{
+grid-template-columns:1fr;
+gap:40px;
+}
+
+.avatar{
+height:380px;
+}
+
+.contact-grid{
+grid-template-columns:1fr;
+}
+
+.name{
+font-size:36px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="main-grid">
+
+<!-- LEFT -->
+
+<div class="left">
+
+<div class="avatar">
+<img src="/assets/asset/Pro_Photo_1.png" alt="Hardik Sheth">
+</div>
+
+<div>
+<div class="name">Hardik <em>Sheth</em></div>
+<div class="title">Multi-Industry Entrepreneur</div>
+</div>
+
+<div class="profile">
+Hardik Sheth is a multi-industry entrepreneur and business leader with six thriving enterprises spanning from real estate, government supply to manufacturing. Through these ventures, he has demonstrated a consistent ability to identify high-growth opportunities and scale them with commercial precision. Backed by a strong business and government network, he brings rare strategic depth to every endeavour. Beyond business, his commitment to philanthropy and leadership roles in prominent national and international organisations further distinguish him as a figure of broad influence and stature.
+</div>
+
+</div>
+
+<!-- RIGHT -->
+
+<div>
+
+<div class="section">
+
+<div class="section-title">Business Portfolio</div>
+
+<ul class="portfolio">
+<li>The Cube Realty</li>
+<li>Vishal Furniture Industries</li>
+<li>Vardhman Trading Co.</li>
+<li>Arham Infra Build</li>
+<li>Pinnacle Paint Tech Pvt. Ltd.</li>
+<li>Naayaab Gift Print Pack Pvt. Ltd.</li>
+</ul>
+
+</div>
+
+<div class="section">
+
+<div class="section-title">In Association With</div>
+
+<div class="association">
+<b>Wings to Fly Foundation</b>
+<span>Director</span>
+</div>
+
+<div class="association">
+<b>Jain International Organisation</b>
+<span>Global Director</span>
+</div>
+
+<div class="association">
+<b>Blind Cricket Association</b>
+<span>Vice President</span>
+</div>
+
+<div class="association">
+<b>Pride Assignments LLP</b>
+<span>Director</span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- CONTACT -->
+
+<div class="contact">
+
+<div class="section-title">Contact</div>
+
+<div class="contact-grid">
+
+<div class="contact-box">
+<div class="contact-label">Address</div>
+<div class="contact-value">
+A 9–13, Sumel-6, Safal Business Park<br>
+Opp. Hanumanpura BRTS, Shahibaug<br>
+Ahmedabad — 380004
+</div>
+</div>
+
+<div class="contact-box">
+<div class="contact-label">Mobile</div>
+<div class="contact-value">+91 93270 56262</div>
+</div>
+
+<div class="contact-box">
+<div class="contact-label">Email</div>
+<div class="contact-value">hardiksheth10@yahoo.co.in</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>

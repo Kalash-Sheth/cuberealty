@@ -10,7 +10,7 @@ const founders = [
     role: 'Co-Founder & Director',
     quote: '"Our vision is to create spaces where luxury meets purpose, and investment meets lifestyle."',
     image: '/assets/asset/Pro_Photo_1.png',
-    profileLink: 'https://dizitalbiz.in/hardik-sheth',
+    profileLink: '/hardik-sheth-profile.html',
   },
   {
     name: 'Tejas Dadia',
