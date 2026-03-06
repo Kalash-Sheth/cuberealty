@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tejas Dadia — Director</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+:root{
+--gold:#C9A84C;
+--dark:#0A0A0A;
+--dark2:#121212;
+--text:#F0EAD6;
+--muted:#8A7A5A;
+--border:rgba(201,168,76,.25);
+}
+
+body{
+background:var(--dark);
+font-family:Montserrat;
+color:var(--text);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:40px 20px;
+}
+
+/* MAIN CARD */
+
+.card{
+width:100%;
+/* max-width:1200px; */
+border:1px solid var(--border);
+background:linear-gradient(145deg,#151515,#0f0f0f);
+padding:60px;
+}
+
+/* GRID */
+
+.layout{
+display:grid;
+grid-template-columns:420px 1fr;
+gap:60px;
+align-items:center;
+}
+
+/* IMAGE */
+
+.photo{
+width:300px;
+height:100%;
+overflow:hidden;
+border:1px solid var(--border);
+}
+
+.photo img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* NAME */
+
+.name{
+margin-top:20px;
+font-family:"Cormorant Garamond";
+font-size:44px;
+font-weight:300;
+}
+
+.title{
+margin-top:6px;
+font-size:12px;
+letter-spacing:4px;
+text-transform:uppercase;
+color:var(--muted);
+}
+
+/* ABOUT */
+
+.about-title{
+font-size:12px;
+letter-spacing:4px;
+text-transform:uppercase;
+color:var(--gold);
+margin-bottom:18px;
+border-bottom:1px solid var(--border);
+padding-bottom:10px;
+}
+
+.about-text{
+font-family:"Cormorant Garamond";
+font-size:22px;
+line-height:1.9;
+color:rgba(240,234,214,.9);
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.card{
+padding:40px 24px;
+}
+
+.layout{
+grid-template-columns:1fr;
+gap:30px;
+}
+
+.photo{
+height:380px;
+}
+
+.name{
+font-size:34px;
+}
+
+.about-text{
+font-size:20px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="layout">
+
+<!-- LEFT -->
+
+<div>
+
+<div class="photo">
+<img src="/assets/asset/Pro_Photo_2.png" alt="Tejas Dadia">
+</div>
+
+<div class="name">Tejas Dadia</div>
+
+<div class="title">Real Estate Entrepreneur</div>
+
+</div>
+
+<!-- RIGHT -->
+
+<div>
+
+<div class="about-title">About Tejas Dadia</div>
+
+<div class="about-text">
+
+<p>
+Mr. Tejas Dadia, with over a decade of experience in real estate,
+has established himself as a forward-thinking leader with a flair
+for creating innovative spaces. From resort villas to co-working and co-living concepts, his journey
+reflects a passion for developing projects that go beyond infrastructure
+to deliver real solutions for modern lifestyles.
+</p>
+
+<br>
+
+<p>
+Recently honored with the <b>"Best Emerging Brand of the Year"</b>
+award for The Cube Club, Mr. Dadia continues to set new benchmarks
+in Gujarat's real estate sector. His vision is clear: to transform the landscape with socially-driven,
+solution-oriented projects that seamlessly blend luxury,
+sustainability, and community living.
+</p>
+
+<br>
+
+<p>
+A true visionary, Mr. Dadia is shaping the future of real estate—
+where every project is not just a development,
+but a lifestyle revolution.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

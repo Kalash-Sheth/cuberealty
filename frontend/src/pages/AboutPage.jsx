@@ -17,7 +17,7 @@ const founders = [
     role: 'Founder & Director',
     quote: '"Every villa we build is a testament to our commitment to excellence and investor success."',
     image: '/assets/asset/Pro_Photo_2.png',
-    profileLink: 'https://your-link-here.com',
+    profileLink: '/tejas-dadia-profile.html',
   },
 ];
 
